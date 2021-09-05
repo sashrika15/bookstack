@@ -1,18 +1,44 @@
   
 {% extends "index.html" %}
 {% block title %}
-Fiction Books
+Login
 {% endblock %}
 
-{% block header_nav %}
-<nav id="navbar" class="navbar">
-    <ul>
-      <li><a class="nav-link" href="/">Home</a></li>
-      <li><a class="nav-link" href="fiction">Fiction</a></li>
-      <li><a class="nav-link" href="non-fiction">Non-Fiction</a></li>
-      <li><a class="nav-link active" href="login">Login</a></li>
-    </ul>
-    <i class="bi bi-list mobile-nav-toggle"></i>
-  </nav>
+{% block navbar %}
+        <li class='dropdown'><span>Books ▾</span>
+          <ul class='features-menu'>         
+            <li><a href='fiction'>Fiction</a></li>
+            <li><a href='nonfiction'>Non-Fiction</a></li>
+          </ul>        
+        </li>
+        <li><a href='cart'>Cart</a></li>
+        <li><a href='login'>Login</a></li>
 {% endblock %}
+
+{% block content %}
+<section id="register">
+  <form action="{{ url_for('login') }}" method="POST">
+      <div class="login">
+          <div class="login-screen">
+              <div class="app-title">
+
+                  <h1>Login</h1>
+                  <h3> {{ message }}</h3>
+              </div>
+              <div class="login-form">
+                  <div class="control-group">
+                      <input type="text" class="login-field" value="" placeholder="Username" name="username">
+                  </div>
+                  <div class="control-group">
+                      <input type="password" class="login-field" value="" placeholder="Password" name="password">
+                  </div>
+                  <input type="submit" value="Log in" class="btn btn-primary btn-large btn-block">
+                  <a href="/register/newuser">New User</a>
+              </div>
+          </div>
+      </div>
+  </form>
+</section>
+{% endblock %}
+
 

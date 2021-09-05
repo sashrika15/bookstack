@@ -4,15 +4,55 @@
 Fiction Books
 {% endblock %}
 
-{% block header_nav %}
-<nav id="navbar" class="navbar">
-    <ul>
-      <li><a class="nav-link" href="/">Home</a></li>
-      <li><a class="nav-link active" href="fiction">Fiction</a></li>
-      <li><a class="nav-link" href="non-fiction">Non-Fiction</a></li>
-      <li><a class="nav-link" href="login">Login</a></li>
-    </ul>
-    <i class="bi bi-list mobile-nav-toggle"></i>
-  </nav>
+{% block navbar %}
+        <li class='dropdown'><span>Books ▾</span>
+          <ul class='features-menu'>         
+            <li><a href='fiction'>Fiction</a></li>
+            <li><a href='nonfiction'>Non-Fiction</a></li>
+          </ul>        
+        </li>
+        <li><a href='cart'>Cart</a></li>
+        <li><a href='login'>Login</a></li>
 {% endblock %}
+
+{% block content %}
+
+<div class="books-container">
+  <div class="books">
+    <div class="row"> 
+      <div class="flex-item ">
+    <div class="card">
+      <img src="static/img/book1.jpeg" alt="Book 1" style="width:100%">
+      <h4>Harry Potter and the Philosophers Stone</h4>
+      <p class="price">Rs 200</p>
+      <p>by JK Rowling</p>
+      <p><button>Add to Cart</button></p>
+      
+    </div>
+  </div>
+  <div class="flex-item">
+    <div class="card">
+      <img src="static/img/book2.jpeg" alt="Book 2" style="width:100%">
+      <h4>Harry Potter and the Chamber of Secrets</h4>
+      <p class="price">Rs 200</p>
+      <p>by JK Rowling</p>
+      <p><button>Add to Cart</button></p>
+    </div>
+  </div>
+  <div class="flex-item">
+    <div class="card">
+      <img src="static/img/book3.jpeg" alt="Book 1" style="width:100%">
+      <h4>Harry Potter and the Prisoner of Azkaban</h4>
+      <p class="price">Rs 200</p>
+      <p>by JK Rowling</p>
+      <p><button>Add to Cart</button></p>
+    </div>
+  </div>
+    </div> 
+    
+  </div>
+</div>
+
+{% endblock %}
+
 

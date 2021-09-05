@@ -1,59 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'/>
+    <title>BookStack - {% block title %} Home {% endblock %}</title>
+    <link href='static/assets/css/style.css' rel='stylesheet'/>
+  </head>
+  <body>
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <div class='header'>
+      <div class='logo'><h1>Book<span>Stack</span></h1></div>
+      <ul class='menu'>
+        {% block navbar %}
+        <li class='dropdown'><span>Books ▾</span>
+          <ul class='features-menu'>         
+            <li><a href='fiction'>Fiction</a></li>
+            <li><a href='nonfiction'>Non-Fiction</a></li>
+          </ul>        
+        </li>
+        <li><a href='cart'>Cart</a></li>
+        <li><a href='login'>Login</a></li>
+        {% endblock %}
 
-  <title>BookStack - {% block title %} Home {% endblock %} </title>
+      </ul>
+    </div>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-
-  <link href="static/assets/css/style.css" rel="stylesheet">
-
-</head>
-
-<body>
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center">
-    <div class="container-fluid">
-
-      <div class="row justify-content-center align-items-center">
-        <div class="col-xl-11 d-flex align-items-center justify-content-between">
-          <h1 class="logo"><a href="/">BookStack</a></h1>
-          {% block header_nav %}
-          <nav id="navbar" class="navbar">
-            <ul>
-              <li><a class="nav-link active" href="/">Home</a></li>
-              <li><a class="nav-link" href="fiction">Fiction</a></li>
-              <li><a class="nav-link" href="non-fiction">Non-Fiction</a></li>
-              <li><a class="nav-link" href="login">Login</a></li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-          </nav><!-- .navbar -->
-          {% endblock %}
-        </div>
-      </div>
+    {% block content %}
+    <div class="hero-container">
+    <div class="hero">
+      <!-- <div class='bg-image'><img src='static/img/bg.jpg'/></div> -->
+      <div class="title">
+      <h1> Welcome to BookStack! </h1>
+    </div>
+      <div class="subtitle">
+      <p> Find affordable books for all your bookaholic needs! </p>
+    </div>
 
     </div>
-  </header> <!-- ======= End Header ======= -->
-
-  <!-- <section>
-    <h1>Welcome to BookStack</h1>
-  </section> -->
+  </div>
+  {% endblock %}
 
 
-</body>
-
+  </body>
 </html>
