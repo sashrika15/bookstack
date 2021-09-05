@@ -1,6 +1,5 @@
 {% extends "index.html" %}
 
-
 {%block content%}
 	<section id="cart_items">
 		<div class="container">
@@ -34,10 +33,10 @@
 						{% set _id = session['cart_item'][key]['_id'] %}
 						<tr>
 							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
+								<a href="#"><img src="static/images/home/product1.jpeg" alt=""></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">{{ name }}</a></h4>
+								<h4><a href="#">{{ name }}</a></h4>
 								<p>{{ author }}</p>
 							</td>
 							<td class="cart_price">
@@ -52,9 +51,6 @@
 							</td>
 							<td class="cart_total">
 								<p class="cart_total_price">{{ item_price }}</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
 						{% endfor %}
@@ -85,7 +81,6 @@
 						<ul>
 							<li>Cart Sub Total <span>{{ session['all_total_price']}}</span></li>
 							<li>Total Items <span>{{ session['all_total_quantity']}}</span></li>
-							<li>Total <span>{{ session['all_total_price']}}</span></li>
 						</ul>
 							<!-- <a class="btn btn-default update" href="">Update</a>
 							<a class="btn btn-default check_out" href="">Check Out</a> -->
