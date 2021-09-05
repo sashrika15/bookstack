@@ -16,90 +16,61 @@
 						<tr class="cart_menu">
 							<td class="image">Item</td>
 							<td class="description"></td>
-							<td class="price">Price</td>
+							<td class="price">Unit Price</td>
 							<td class="quantity">Quantity</td>
 							<td class="total">Total</td>
 							<td></td>
 						</tr>
 					</thead>
+					{% if 'cart_item' in session %}
 					<tbody>
+						<p><a id="btnEmpty" href="{{ url_for('.empty_cart') }}" class="btn btn-danger">Empty Cart</a></p>
+						{% for key, val in session['cart_item'].items() %}
+						{% set name = session['cart_item'][key]['name'] %}
+						{% set author = session['cart_item'][key]['author'] %}
+						{% set quantity = session['cart_item'][key]['quantity'] %}
+						{% set price = session['cart_item'][key]['price'] %}
+						{% set item_price = session['cart_item'][key]['total_price'] %}
+						{% set _id = session['cart_item'][key]['_id'] %}
 						<tr>
 							<td class="cart_product">
 								<a href=""><img src="images/cart/one.png" alt=""></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
+								<h4><a href="">{{ name }}</a></h4>
+								<p>{{ author }}</p>
 							</td>
 							<td class="cart_price">
-								<p>$59</p>
+								<p>{{ price }}</p>
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
+									<a class="cart_quantity_up" href="{{ url_for('updateProduct',id=_id) }}"> + </a>
+									<input class="cart_quantity_input" type="text" name="quantity" value="{{ quantity }}" autocomplete="off" size="2">
+									<a class="cart_quantity_down" href="{{ url_for('deleteProduct',id=_id) }}"> - </a>
 								</div>
 							</td>
 							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
+								<p class="cart_total_price">{{ item_price }}</p>
 							</td>
 							<td class="cart_delete">
 								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
+						{% endfor %}
 
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/two.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/three.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
 					</tbody>
+					{% else %}
+					<tbody>
+						<tr>
+							<td class="cart_product">
+								<h3>No items in cart</h3>
+							</td>
+						</tr>
+						<p><a id="btnEmpty" href="{{ url_for('empty_cart') }}" class="btn btn-danger">Empty Cart</a></p>
+					</tbody>
+					{% endif %}
+					
 				</table>
 			</div>
 		</div>
@@ -112,13 +83,12 @@
 				<div class="col-sm-6">
 					<div class="total_area">
 						<ul>
-							<li>Cart Sub Total <span>$59</span></li>
-							<li>Eco Tax <span>$2</span></li>
-							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span>$61</span></li>
+							<li>Cart Sub Total <span>{{ session['all_total_price']}}</span></li>
+							<li>Total Items <span>{{ session['all_total_quantity']}}</span></li>
+							<li>Total <span>{{ session['all_total_price']}}</span></li>
 						</ul>
-							<a class="btn btn-default update" href="">Update</a>
-							<a class="btn btn-default check_out" href="">Check Out</a>
+							<!-- <a class="btn btn-default update" href="">Update</a>
+							<a class="btn btn-default check_out" href="">Check Out</a> -->
 					</div>
 				</div>
 			</div>
