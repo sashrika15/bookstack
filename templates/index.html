@@ -1,44 +1,126 @@
 <!DOCTYPE html>
-<html lang='en'>
-  <head>
-    <meta charset='UTF-8'/>
-    <title>BookStack - {% block title %} Home {% endblock %}</title>
-    <link href='static/assets/css/style.css' rel='stylesheet'/>
-  </head>
-  <body>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | BookStack</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="static/css/prettyPhoto.css" rel="stylesheet">
+    <link href="static/css/price-range.css" rel="stylesheet">
+    <link href="static/css/animate.css" rel="stylesheet">
+	<link href="static/css/main.css" rel="stylesheet">
+	<link href="static/css/responsive.css" rel="stylesheet">
+	
+    <link rel="shortcut icon" href="static/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="static/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
 
-    <div class='header'>
-      <div class='logo'><h1>Book<span>Stack</span></h1></div>
-      <ul class='menu'>
-        {% block navbar %}
-        <li class='dropdown'><span>Books ▾</span>
-          <ul class='features-menu'>         
-            <li><a href='fiction'>Fiction</a></li>
-            <li><a href='nonfiction'>Non-Fiction</a></li>
-          </ul>        
-        </li>
-        <li><a href='cart'>Cart</a></li>
-        <li><a href='login'>Login</a></li>
-        {% endblock %}
+<body>
 
-      </ul>
-    </div>
+	<header id="header"><!--header-->
+		{% block nav %}
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 clearfix">
+						<div class="logo pull-left">
+							<a href="/"><img src="static/images/home/books1.png" alt="" /></a>
+						</div>
+					</div>
+					<div class="col-md-8 clearfix">
+						<div class="shop-menu clearfix pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="/">Home</a></li>
+								<li><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								{% if 'user' in session %}
+								<!-- <li><a href="/">Welcome</a></li> -->
+								<li><a href="/logout"><i class="fa fa-lock"></i> Logout</a></li>
+								{% else %}
+								<li><a href="login"><i class="fa fa-lock"></i> Login</a></li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+		{% endblock %}
 
-    {% block content %}
-    <div class="hero-container">
-    <div class="hero">
-      <!-- <div class='bg-image'><img src='static/img/bg.jpg'/></div> -->
-      <div class="title">
-      <h1> Welcome to BookStack! </h1>
-    </div>
-      <div class="subtitle">
-      <p> Find affordable books for all your bookaholic needs! </p>
-    </div>
+	</header><!--/header-->
+	
+	{% block content %}
 
-    </div>
-  </div>
-  {% endblock %}
+	<section>
+		<div class="container">
+			<div class="row">
+
+				<div class="col-sm padding-right">
+					<div class="features_items"><!--features_items-->
+						<br>
+						{% if 'user' in session %}
+						<h2 class="title text-center">Items</h2>
+						{% for product in products %}
+						<form action="{{ url_for('add') }}" method="POST">
+						<div class="col-sm-3">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+										<div class="productinfo text-center">
+											<img src="static/images/home/product1.jpeg" alt="" />
+											<h2>{{ product["name"] }}</h2>
+											<p>{{ product["author"] }}</p>
+											<p>{{ product["price"] }}</p>
+											<!-- <p>{{ product['_id'] }}</p> -->
+											<input type="hidden" name = "id" value = "{{ product['_id'] }}">
+											<input type='number' name = "quantity" value = "1">
+											<button class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+											<!-- <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a> -->
+										</div>
+										
+								</div>
+							</div>
+						</div>
+						</form>
+						{% endfor %} 
+						{% else %}
+						<h1 class="title text-center">Welcome to BookStack!</h1>
+						<!-- <div class="col-sm">
+						<img src="static/images/home/bg.jpeg" alt="" />
+						</div> -->
+						{% endif %}
+						
+					</div><!--features_items-->
+				</div>
+			</div>
+		</div>
+	</section>
+	{% endblock %}
 
 
-  </body>
+	<footer id="footer"><!--Footer-->
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+				</div>
+			</div>
+		</div>
+		
+	</footer><!--/Footer-->
+	
+
+  
+    <script src="static/js/jquery.js"></script>
+	<script src="static/js/bootstrap.min.js"></script>
+	<script src="static/js/jquery.scrollUp.min.js"></script>
+	<script src="static/js/price-range.js"></script>
+    <script src="static/js/jquery.prettyPhoto.js"></script>
+    <script src="static/js/main.js"></script>
+</body>
 </html>
