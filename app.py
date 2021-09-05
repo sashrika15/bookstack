@@ -46,32 +46,60 @@ def logout():
 def register():
     return 'hi'
 
+def Merge(dict1, dict2):
+    res = dict1 | dict2
+    return res
+
 @app.route('/add',methods=['POST'])
 def add():
-    id = int(request.form['id'])
+    _id = int(request.form['id'])
     quantity = int(request.form['quantity'])
-    if id and request.method=='POST':
-        query = {"_id": id}
+    if _id and request.method=='POST':
+        query = {"_id": _id}
         # print(query)
         cur = products.find_one(query)
         # print(cur['name'])
-        item = {cur['_id']:{'name':cur['name'],'author':cur['author'],'id':cur['_id'],'price':cur['price'],'quantity':quantity,'total_price': quantity * cur['price']}}
-        print(item)
+        item = {cur['_id']:{'name':cur['name'],'author':cur['author'],'_id':cur['_id'],'price':cur['price'],'quantity':quantity,'total_price': quantity * cur['price']}}
+        # print(item)
         all_total_price = 0
         all_total_quantity = 0
         session.modified = True
+
         if 'cart_item' in session:
-            print()
+            print("Cart item in session")
+            dict = session['cart_item']
+            key = str(cur['_id'])
+            if key in dict:
+                print("Cart item with id in session")
+                # print(session['cart_item'][key])
+                for idx, value in session['cart_item'].items():
+                    if key == idx:
+                        old_quantity = session['cart_item'][key]['quantity']
+                        total_quantity = old_quantity + quantity
+                        session['cart_item'][key]['quantity'] = total_quantity
+                        session['cart_item'][key]['total_price'] = total_quantity * cur['price']
+                        print(session['cart_item'])
+            else:
+                print("Cart item with given id not in session")
 
+                # session['cart_item'].update(item)
+                # print(session['cart_item'])
+        
+            for key, value in session['cart_item'].items():
+                individual_quantity = int(session['cart_item'][key]['quantity'])
+                individual_price = float(session['cart_item'][key]['total_price'])
+                all_total_quantity = all_total_quantity + individual_quantity
+                all_total_price = all_total_price + individual_price
         else:
-            session['cart_item']=item
-            print(session['cart_item'])
-            all_total_price=all_total_price + quantity*cur['price']
-            # print(session['total_price'])
-            all_total_quantity=all_total_quantity+quantity
-
-        session['all_total_quantity']=all_total_quantity
-        session['all_total_price']=all_total_price
+            print("Cart item not in session")
+            session['cart_item'] = item
+            
+            # print(session['cart_item'])
+            all_total_quantity = all_total_quantity + quantity
+            all_total_price = all_total_price + quantity * cur['price']
+            
+        session['all_total_quantity'] = all_total_quantity
+        session['all_total_price'] = all_total_price
 
         return redirect(url_for('index'))
     else:
