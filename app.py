@@ -3,8 +3,7 @@ import json
 from pymongo import MongoClient
 
 app = Flask(__name__)
-app.secret_key = 'a random string'
-api_key = "5ae2e3f221c38a288asdfsfd5fbdc89d5d4039b07c283619ac27"
+app.secret_key = 'a raasd g'
 
 cluster = MongoClient("mongodb+srv://sashrika:a1l4BDHjYDX1Ciue@cluster0.uciyc.mongodb.net/bookshop?retryWrites=true&w=majority")
 db=cluster["ecommerce"]
@@ -67,10 +66,11 @@ def add():
 
         if 'cart_item' in session:
             print("Cart item in session")
+            print(session['cart_item'])
             dict = session['cart_item']
             key = str(cur['_id'])
             if key in dict:
-                print("Cart item with id in session")
+                # print("Cart item with id in session")
                 # print(session['cart_item'][key])
                 for idx, value in session['cart_item'].items():
                     if key == idx:
@@ -80,20 +80,17 @@ def add():
                         session['cart_item'][key]['total_price'] = total_quantity * cur['price']
                         print(session['cart_item'])
             else:
-                print("Cart item with given id not in session")
-
-                # session['cart_item'].update(item)
+                # print("Cart item with given id not in session")
+                session['cart_item'][key]={'name':cur['name'],'author':cur['author'],'_id':cur['_id'],'price':cur['price'],'quantity':quantity,'total_price': quantity * cur['price']}
                 # print(session['cart_item'])
-        
             for key, value in session['cart_item'].items():
                 individual_quantity = int(session['cart_item'][key]['quantity'])
                 individual_price = float(session['cart_item'][key]['total_price'])
                 all_total_quantity = all_total_quantity + individual_quantity
                 all_total_price = all_total_price + individual_price
         else:
-            print("Cart item not in session")
+            # print("Cart item not in session")
             session['cart_item'] = item
-            
             # print(session['cart_item'])
             all_total_quantity = all_total_quantity + quantity
             all_total_price = all_total_price + quantity * cur['price']
