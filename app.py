@@ -1,20 +1,17 @@
 from flask import *
-import json
 from pymongo import MongoClient
 
 app = Flask(__name__)
-app.secret_key = 'a rakasjdasd g'
+app.secret_key = 'a rakaasdkjsd g'
 
-cluster = MongoClient("mongodb+srv://sashrika:a1l4BDHjYDX1Ciue@cluster0.uciyc.mongodb.net/bookshop?retryWrites=true&w=majority")
+cluster = MongoClient("mongodb+srv://sashrika:a1l4BDHjYDX1Ciue@cluster0.uciyc.mongodb.net/ecommerce?retryWrites=true&w=majority")
 db=cluster["ecommerce"]
 users=db["users"]
 products=db["products"]
-# cart=db["cart"]
 
 @app.route('/')
 def index():
     if "user" in session:
-        user=session['user']
         cur=products.find()
         prod=list(cur)
         return render_template('index.html',products=prod)
@@ -29,7 +26,12 @@ def login():
         session['user']=user
         query = {"username": user, "password": pwd}
         cur = users.find_one(query)
-        return redirect(url_for('index')) #render home page with user
+        if cur is not None:
+            # Correct username and pwd
+            return redirect(url_for('index')) #render home page with user
+        else:
+            # Wrong username
+            return render_template('login.html')
     else:
         return render_template('login.html')
 
@@ -101,25 +103,16 @@ def updateProduct(id):
     _id = int(id)
     query = {"_id": int(_id)}
     cur = products.find_one(query)
-    all_total_quantity=session['all_total_quantity']
-    all_total_price=session['all_total_price']
     session.modified = True
     ############# UPDATE #################
     for idx, _ in session['cart_item'].items():
         if id == idx:
-            # print("Tryna update")
             old_quantity = int(session['cart_item'][id]['quantity'])
-            # print(old_quantity)
             total_quantity = old_quantity + 1
-            # print(total_quantity)
             session['cart_item'][id]['quantity'] = total_quantity
             session['cart_item'][id]['total_price'] = total_quantity * int(cur['price'])
-            # print(session['cart_item'][id])
-    for key, _ in session['cart_item'].items():
-            individual_quantity = int(session['cart_item'][key]['quantity'])
-            individual_price = float(session['cart_item'][key]['total_price'])
-            all_total_quantity = all_total_quantity + individual_quantity
-            all_total_price = all_total_price + individual_price
+            session['all_total_quantity'] = session['all_total_quantity'] + 1
+            session['all_total_price'] = session['all_total_price'] + int(cur['price'])
     return redirect(url_for('cart'))
 
 @app.route('/cart')
@@ -142,11 +135,12 @@ def deleteProduct(id):
     ############# DELETE ##############
     for idx, _ in session['cart_item'].items():
         if id == idx:
-            print("Tryna delete")
             old_quantity = int(session['cart_item'][id]['quantity'])
-            # print(old_quantity)
+            if old_quantity<=0:
+                session['cart_item'].pop(id, None)
+                break
+            
             total_quantity = old_quantity - 1
-            # print(total_quantity)
             session['cart_item'][id]['quantity'] = total_quantity
             session['cart_item'][id]['total_price'] = total_quantity * int(cur['price'])
 
