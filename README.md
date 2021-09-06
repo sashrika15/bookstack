@@ -53,5 +53,8 @@ localhost:5000
 <img src="static/images/newuser.gif" width="600">
 </p>
 
+## Note
+- Template website from [here](https://themehunt.com/profile/themeum)
+
 ## Queries
 - For queries, open an Issue or contact me via email.
