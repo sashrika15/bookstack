@@ -2,7 +2,7 @@ from flask import *
 from pymongo import MongoClient
 
 app = Flask(__name__)
-app.secret_key = 'a rakaasdkjsd g'
+app.secret_key = 'a raksdkjsd g'
 
 cluster = MongoClient("mongodb+srv://sashrika:a1l4BDHjYDX1Ciue@cluster0.uciyc.mongodb.net/ecommerce?retryWrites=true&w=majority")
 db=cluster["ecommerce"]
@@ -23,11 +23,11 @@ def login():
     if request.method=='POST':
         user=request.form['user']
         pwd=request.form['pwd']
-        session['user']=user
         query = {"username": user, "password": pwd}
         cur = users.find_one(query)
         if cur is not None:
             # Correct username and pwd
+            session['user']=user
             return redirect(url_for('index')) #render home page with user
         else:
             # Wrong username
@@ -40,9 +40,20 @@ def logout():
     session.pop('user',None)
     return redirect(url_for('login'))
 
-@app.route('/loasfasf')
+@app.route('/register',methods=['POST'])
 def register():
-    return 'hi'
+    if request.method=='POST':
+        user=request.form['user']
+        pwd=request.form['pwd']
+        query = {"username": user, "password": pwd}
+        cur = users.insert_one(query)
+        if cur is not None:
+            return(redirect(url_for('login')))
+        else:
+            # Error in inserting
+            return(redirect(url_for('login')))
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/add',methods=['POST'])
