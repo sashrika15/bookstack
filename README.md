@@ -1,6 +1,6 @@
 # BookStack
 
-A RESTful shopping cart API which can create new users, add/update or delete items from cart.
+A RESTful shopping cart API for a book shop which can create new users, add/update or delete books from the cart.
 
 ## Tech Stack
 - MongoDB
