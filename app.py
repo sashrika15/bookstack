@@ -4,7 +4,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 app.secret_key = 'a raksdkjsd g'
 
-cluster = MongoClient("mongodb+srv://sashrika:a1l4BDHjYDX1Ciue@cluster0.uciyc.mongodb.net/ecommerce?retryWrites=true&w=majority")
+cluster = MongoClient("<YOUR URI STRING>")
 db=cluster["ecommerce"]
 users=db["users"]
 products=db["products"]
