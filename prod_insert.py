@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import random
 
-cluster = MongoClient("mongodb+srv://sashrika:a1l4BDHjYDX1Ciue@cluster0.uciyc.mongodb.net/bookshop?retryWrites=true&w=majority")
+cluster = MongoClient("<YOUR URI STRING>")
 db=cluster["ecommerce"]
 users=db["users"]
 products=db["products"]
